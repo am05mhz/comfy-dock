@@ -124,6 +124,11 @@ start_code_server() {
     echo "code-server started"
 }
 
+start_app() {
+    echo "Starting code-server..."
+    nohup python app.py
+}
+
 # ---------------------------------------------------------------------------- #
 #                               Main Program                                   #
 # ---------------------------------------------------------------------------- #
@@ -135,8 +140,9 @@ execute_script "/pre_start.sh" "Running pre-start script..."
 echo "Pod Started"
 
 setup_ssh
-start_jupyter
+# start_jupyter
 start_code_server
+start_app
 export_env_vars
 
 execute_script "/post_start.sh" "Running post-start script..."

@@ -1,5 +1,5 @@
 variable "DOCKERHUB_REPO_NAME" {
-    default = "sombi/comfyui"
+    default = "am05mhz/pebble-test"
 }
 
 variable "PYTHON_VERSION" {

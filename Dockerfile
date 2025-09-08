@@ -105,6 +105,13 @@ COPY proxy/nginx.conf /etc/nginx/nginx.conf
 COPY proxy/snippets /etc/nginx/snippets
 COPY proxy/readme.html /usr/share/nginx/html/readme.html
 
+# app
+COPY app/app.py /workspace/ComfyUI/
+COPY app/requirements.txt /workspace/ComfyUI/
+
+RUN cd /workspace/ComfyUI
+    pip install --no-cache-dir -r requirements.txt
+
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
 
