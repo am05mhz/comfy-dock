@@ -21,5 +21,3 @@ https://github.com/alexopus/ComfyUI-Image-Saver.git
 https://github.com/jupo-ai/comfy-ex-tagcomplete.git
 https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
 https://github.com/orssorbit/ComfyUI-wanBlockswap.git
-https://github.com/Comfy-Org/ComfyUI-Manager.git
-https://github.com/QuietNoise/ComfyUI-Queue-Manager.git

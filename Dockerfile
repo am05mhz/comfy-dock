@@ -78,6 +78,10 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     pip install --no-cache-dir -r requirements.txt && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
     cd custom_nodes/ComfyUI-Manager && \
+    pip install --no-cache-dir -r requirements.txt && \
+    cd ../.. && \
+    git clone https://github.com/QuietNoise/ComfyUI-Queue-Manager.git custom_nodes/ComfyUI-Queue-Manager && \
+    cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
 COPY custom_nodes.txt /custom_nodes.txt
