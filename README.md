@@ -1,10 +1,4 @@
-[![Build and Push Docker Images](https://github.com/somb1/ComfyUI-Docker/actions/workflows/build.yml/badge.svg)](https://github.com/somb1/ComfyUI-Docker/actions/workflows/build.yml)
-
-> 🔄 **Auto-updated every 8 hours** to always include the latest version.
-
-> 💬 Feedback & Issues → [GitHub Issues](https://github.com/somb1/ComfyUI-Docker/issues)
-
-> 🚀 This Docker image was originally built for running on RunPod, but it can also be used on your local machine. See the [Local Setup Guide(WiP)](https://github.com/somb1/ComfyUI-Docker/wiki/Running-on-Local).
+[![Build and Push Docker Images](https://github.com/am05mhz/comfy-dock/actions/workflows/build.yml/badge.svg)](https://github.com/am05mhz/comfy-dock/actions/workflows/build.yml)
 
 ## 🔌 Exposed Ports
 
