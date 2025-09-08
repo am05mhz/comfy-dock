@@ -27,14 +27,6 @@ target "_common" {
     }
 }
 
-target "_cu124" {
-    inherits = ["_common"]
-    args = {
-        BASE_IMAGE         = "nvidia/cuda:12.4.1-devel-ubuntu22.04"
-        CUDA_VERSION       = "cu124"
-    }
-}
-
 target "_cu125" {
     inherits = ["_common"]
     args = {
@@ -109,34 +101,4 @@ target "base-12-9" {
 target "base-13-0" {
     inherits = ["_cu130"]
     tags = tag("base", "cu130")
-}
-
-target "slim-12-4" {
-    inherits = ["_cu124", "_no_custom_nodes"]
-    tags = tag("slim", "cu124")
-}
-
-target "slim-12-5" {
-    inherits = ["_cu125", "_no_custom_nodes"]
-    tags = tag("slim", "cu125")
-}
-
-target "slim-12-6" {
-    inherits = ["_cu126", "_no_custom_nodes"]
-    tags = tag("slim", "cu126")
-}
-
-target "slim-12-8" {
-    inherits = ["_cu128", "_no_custom_nodes"]
-    tags = tag("slim", "cu128")
-}
-
-target "slim-12-9" {
-    inherits = ["_cu129", "_no_custom_nodes"]
-    tags = tag("slim", "cu129")
-}
-
-target "slim-13-0" {
-    inherits = ["_cu130", "_no_custom_nodes"]
-    tags = tag("slim", "cu130")
 }
