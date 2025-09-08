@@ -98,7 +98,7 @@ RUN wget -qO- cli.runpod.net | sudo bash
 # Install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
 
-EXPOSE 22 3000 8080 8888
+EXPOSE 22 3000 5000 8080
 
 # NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
@@ -108,7 +108,6 @@ COPY proxy/readme.html /usr/share/nginx/html/readme.html
 # app
 COPY app/app.py /workspace/ComfyUI/
 COPY app/requirements.txt /workspace/ComfyUI/
-
 RUN cd /workspace/ComfyUI
     pip install --no-cache-dir -r requirements.txt
 

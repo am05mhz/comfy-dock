@@ -71,32 +71,32 @@ export_env_vars() {
 }
 
 # Start jupyter
-start_jupyter() {
-    # Default to not using a password
-    JUPYTER_PASSWORD=""
+# start_jupyter() {
+#     # Default to not using a password
+#     JUPYTER_PASSWORD=""
 
-    # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
-    if [[ ${ACCESS_PASSWORD} ]]; then
-        echo "Starting JupyterLab with the provided password..."
-        JUPYTER_PASSWORD=${ACCESS_PASSWORD}
-    else
-        echo "Starting JupyterLab without a password... (ACCESS_PASSWORD environment variable is not set.)"
-    fi
+#     # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
+#     if [[ ${ACCESS_PASSWORD} ]]; then
+#         echo "Starting JupyterLab with the provided password..."
+#         JUPYTER_PASSWORD=${ACCESS_PASSWORD}
+#     else
+#         echo "Starting JupyterLab without a password... (ACCESS_PASSWORD environment variable is not set.)"
+#     fi
     
-    mkdir -p /workspace/logs
-    cd / && \
-    nohup jupyter lab --allow-root \
-        --no-browser \
-        --port=8888 \
-        --ip=* \
-        --FileContentsManager.delete_to_trash=False \
-        --ContentsManager.allow_hidden=True \
-        --ServerApp.terminado_settings='{"shell_command":["/bin/bash"]}' \
-        --ServerApp.token="${JUPYTER_PASSWORD}" \
-        --ServerApp.allow_origin=* \
-        --ServerApp.preferred_dir=/workspace &> /workspace/logs/jupyterlab.log &
-    echo "JupyterLab started"
-}
+#     mkdir -p /workspace/logs
+#     cd / && \
+#     nohup jupyter lab --allow-root \
+#         --no-browser \
+#         --port=8888 \
+#         --ip=* \
+#         --FileContentsManager.delete_to_trash=False \
+#         --ContentsManager.allow_hidden=True \
+#         --ServerApp.terminado_settings='{"shell_command":["/bin/bash"]}' \
+#         --ServerApp.token="${JUPYTER_PASSWORD}" \
+#         --ServerApp.allow_origin=* \
+#         --ServerApp.preferred_dir=/workspace &> /workspace/logs/jupyterlab.log &
+#     echo "JupyterLab started"
+# }
 
 # Start code-server
 start_code_server() {

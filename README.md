@@ -6,8 +6,8 @@
 | ---- | ---- | ----------- |
 | 22   | TCP  | SSH         |
 | 3000 | HTTP | ComfyUI     |
+| 5000 | HTTP | App         |
 | 8080 | HTTP | code-server |
-| 8888 | HTTP | JupyterLab  |
 
 ---
 
