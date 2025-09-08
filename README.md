@@ -26,14 +26,10 @@ sombi/comfyui:(A)-torch2.8.0-(B)
 
 ## 🧱 Image Variants
 
-| Image Name                            | Custom Nodes | CUDA |
-| ------------------------------------- | ------------ | ---- |
-| `sombi/comfyui:base-torch2.8.0-cu124` | ✅ Yes        | 12.4 |
-| `sombi/comfyui:base-torch2.8.0-cu126` | ✅ Yes        | 12.6 |
-| `sombi/comfyui:base-torch2.8.0-cu128` | ✅ Yes        | 12.8 |
-| `sombi/comfyui:slim-torch2.8.0-cu124` | ❌ No         | 12.4 |
-| `sombi/comfyui:slim-torch2.8.0-cu126` | ❌ No         | 12.6 |
-| `sombi/comfyui:slim-torch2.8.0-cu128` | ❌ No         | 12.8 |
+| Image Name                                  | Custom Nodes | CUDA |
+| ------------------------------------------- | ------------ | ---- |
+| `am05mhz/pebble-test:base-torch2.8.0-cu126` | ✅ Yes       | 12.6 |
+| `am05mhz/pebble-test:base-torch2.8.0-cu128` | ✅ Yes       | 12.8 |
 
 > 👉 To switch: **Edit Pod/Template** → set `Container Image`.
 
@@ -77,7 +73,6 @@ bash /download_presets.sh PRESET1,PRESET2,...
 | ----------- | ------------------------------------------ |
 | ComfyUI     | `/workspace/ComfyUI/user/comfyui_3000.log` |
 | code-server | `/workspace/logs/code-server.log`          |
-| JupyterLab  | `/workspace/logs/jupyterlab.log`           |
 
 ---
 
@@ -115,5 +110,7 @@ bash /download_presets.sh PRESET1,PRESET2,...
 * comfy-ex-tagcomplete
 * ComfyUI-VideoHelperSuite
 * ComfyUI-wanBlockswap
+* ComfyUI-Manager
+* ComfyUI-Queue-Manager
 
 > 👉 More details in the [Wiki](https://github.com/somb1/ComfyUI-Docker/wiki/Custom-Nodes).
