@@ -73,11 +73,6 @@ target "_no_custom_nodes" {
     }
 }
 
-target "base-12-4" {
-    inherits = ["_cu124"]
-    tags = tag("base", "cu124")
-}
-
 target "base-12-5" {
     inherits = ["_cu125"]
     tags = tag("base", "cu125")
