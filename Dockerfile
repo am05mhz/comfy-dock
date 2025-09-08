@@ -108,7 +108,7 @@ COPY proxy/readme.html /usr/share/nginx/html/readme.html
 # app
 COPY app/app.py /workspace/ComfyUI/
 COPY app/requirements.txt /workspace/ComfyUI/
-RUN cd /workspace/ComfyUI
+RUN cd /workspace/ComfyUI \
     pip install --no-cache-dir -r requirements.txt
 
 # Remove existing SSH host keys
