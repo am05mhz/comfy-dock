@@ -67,12 +67,6 @@ target "_cu130" {
     }
 }
 
-target "_no_custom_nodes" {
-    args = {
-        SKIP_CUSTOM_NODES = "1"
-    }
-}
-
 target "base-12-5" {
     inherits = ["_cu125"]
     tags = tag("base", "cu125")
