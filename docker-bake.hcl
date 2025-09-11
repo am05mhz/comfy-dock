@@ -27,6 +27,14 @@ target "_common" {
     }
 }
 
+target "_cu124" {
+    inherits = ["_common"]
+    args = {
+        BASE_IMAGE         = "nvidia/cuda:12.4.1-devel-ubuntu22.04"
+        CUDA_VERSION       = "cu124"
+    }
+}
+
 target "_cu125" {
     inherits = ["_common"]
     args = {
@@ -62,9 +70,14 @@ target "_cu129" {
 target "_cu130" {
     inherits = ["_common"]
     args = {
-        BASE_IMAGE         = "nvidia/cuda:13.0.0-devel-ubuntu24.04"
+        BASE_IMAGE         = "nvidia/cuda:13.0.1-devel-ubuntu24.04"
         CUDA_VERSION       = "cu130"
     }
+}
+
+target "base-12-4" {
+    inherits = ["_cu124"]
+    tags = tag("base", "cu124")
 }
 
 target "base-12-5" {
