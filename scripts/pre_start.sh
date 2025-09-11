@@ -26,6 +26,7 @@ setup_miniconda() {
 }
 
 setup_comfy() {
+    conda activate comfy
     cd /workspace
     git clone https://github.com/comfyanonymous/ComfyUI.git
     cd ComfyUI
