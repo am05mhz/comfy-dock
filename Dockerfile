@@ -72,11 +72,11 @@ COPY app/requirements.txt /setup/app/
 COPY README.md /usr/share/nginx/html/README.md
 
 # Start Scripts
-COPY --chmod=755 scripts/start.sh /workspace/
-COPY --chmod=755 scripts/pre_start.sh /workspace/
-COPY --chmod=755 scripts/post_start.sh /workspace/
+COPY --chmod=755 scripts/start.sh /setup/
+COPY --chmod=755 scripts/pre_start.sh /setup/
+COPY --chmod=755 scripts/post_start.sh /setup/
 
-COPY --chmod=755 scripts/download_models.sh /workspace/
+COPY --chmod=755 scripts/download_models.sh /setup/
 # COPY --chmod=755 scripts/install_custom_nodes.sh /
 
 # Welcome Message

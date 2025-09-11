@@ -259,8 +259,6 @@ class ComfyUIClient:
             logger.error(f"Failed to get image {filename}: {e}")
             return None            
         
-
-            
     def get_queue_status(self) -> Dict[str, Any]:
         """Get ComfyUI queue status"""
         try:
@@ -270,8 +268,7 @@ class ComfyUIClient:
         except Exception as e:
             logger.error(f"Failed to get queue status: {e}")
             return {}
-            
-    
+
     def interrupt_execution(self) -> bool:
             """Interrupt current execution"""
             try:
@@ -432,27 +429,27 @@ class WorkflowManager:
         
         for json_file in workflows_path.glob('*.json'):
             try:
-                with open(json_file, 'r') as f:
-                    workflow_data = json.load(f)
+                # with open(json_file, 'r') as f:
+                #     workflow_data = json.load(f)
                     
                 # Check if it's a full ComfyUI workflow format (has 'nodes' and 'links')
-                if 'nodes' in workflow_data and 'links' in workflow_data:
-                    logger.warning(f"{json_file.name} appears to be in full ComfyUI format, not API format")
-                    # You could add conversion logic here if needed
-                    continue
+                # if 'nodes' in workflow_data and 'links' in workflow_data:
+                #     logger.warning(f"{json_file.name} appears to be in full ComfyUI format, not API format")
+                #     # You could add conversion logic here if needed
+                #     continue
                     
                 workflow_id = json_file.stem  # filename without extension
                 workflow_name = workflow_id.replace('_', ' ').replace('-', ' ').title()
                 
                 # Try to extract description from workflow
                 description = f"Workflow from {json_file.name}"
-                if '_meta' in workflow_data:
-                    description = workflow_data['_meta'].get('description', description)
+                # if '_meta' in workflow_data:
+                #     description = workflow_data['_meta'].get('description', description)
                     
                 self.workflows[workflow_id] = {
                     'id': workflow_id,
                     'name': workflow_name,
-                    'workflow': workflow_data,
+                    # 'workflow': workflow_data,
                     'description': description,
                     'filename': json_file.name
                 }
@@ -1530,15 +1527,16 @@ def index():
 @app.route('/api/workflows')
 def api_workflows():
     """List all available workflows"""
-    workflows = []
-    for wf_id, wf_data in workflow_manager.workflows.items():
-        workflows.append({
-            'id': wf_id,
-            'name': wf_data['name'],
-            'description': wf_data.get('description', ''),
-            'filename': wf_data.get('filename', '')
-        })
-    return jsonify(workflows)
+    return jsonify(workflow_manager.workflows)
+    # workflows = []
+    # for wf_id, wf_data in workflow_manager.workflows.items():
+    #     workflows.append({
+    #         'id': wf_id,
+    #         'name': wf_data['name'],
+    #         'description': wf_data.get('description', ''),
+    #         'filename': wf_data.get('filename', '')
+    #     })
+    # return jsonify(workflows)
 
 @app.route('/api/workflows/<workflow_id>')
 def api_workflow_details(workflow_id):
