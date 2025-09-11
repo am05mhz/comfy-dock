@@ -41,6 +41,22 @@ download_if_missing() {
 
 IFS=',' read -ra PRESETS <<< "$1"
 
+echo "**** Downloading default files ****"
+# upscale model
+download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models" # 66.9MB
+download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"       # 31.1MB
+
+# flux
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/text_encoder/model.safetensors" "/workspace/ComfyUI/models/text_encoders"    # 246MB
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/vae/diffusion_pytorch_model.safetensors" "/workspace/ComfyUI/models/vae"     # 168MB
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/flux1-schnell.safetensors" "/workspace/ComfyUI/models/unet"                  # 23.8GB
+
+# sd 3
+download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/blob/main/text_encoders/t5xxl_fp8_e4m3fn.safetensors" "/workspace/ComfyUI/models/text_encoders"   # 4.89GB
+download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/blob/main/sd3_medium_incl_clips.safetensors" "/workspace/ComfyUI/models/checkpoints"              # 5.97GB
+
+download_if_missing "https://huggingface.co/SG161222/Realistic_Vision_V6.0_B1_noVAE/blob/main/Realistic_Vision_V6.0_NV_B1_inpainting_fp16.safetensors" "/workspace/ComfyUI/models/checkpoints"  # 2.14GB
+
 echo "**** Checking presets and downloading corresponding files ****"
 
 for preset in "${PRESETS[@]}"; do
@@ -139,11 +155,11 @@ for preset in "${PRESETS[@]}"; do
             download_if_missing "https://huggingface.co/sombi/comfyui_models/resolve/main/Wan2.2_nsfw_lora_v0.08a/NSFW-22-H-e8.safetensors" "/workspace/ComfyUI/models/loras"
             download_if_missing "https://huggingface.co/sombi/comfyui_models/resolve/main/Wan2.2_nsfw_lora_v0.08a/NSFW-22-L-e8.safetensors" "/workspace/ComfyUI/models/loras"
             ;;
-        UPSCALE_MODELS)
-            echo "Preset: UPSCALE_MODELS"
-            download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models"
-            download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
-            ;;
+        # UPSCALE_MODELS)
+        #     echo "Preset: UPSCALE_MODELS"
+        #     download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models"
+        #     download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
+        #     ;;
         WAN22_S2V_FP8_SCALED)
             echo "Preset: WAN22_S2V_FP8_SCALED"
             download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"

@@ -11,24 +11,10 @@
 
 ---
 
-## 🏷️ Tag Format
-
-```text
-sombi/comfyui:(A)-torch2.8.0-(B)
-```
-
-* **(A)**: `slim` or `base`
-  * `slim`: ComfyUI + Manager only
-  * `base`: slim + pre-installed custom nodes
-* **(B)**: CUDA version → `cu124`, `cu126`, `cu128`
-
----
-
 ## 🧱 Image Variants
 
 | Image Name                                  | Custom Nodes | CUDA |
 | ------------------------------------------- | ------------ | ---- |
-| `am05mhz/pebble-test:base-torch2.8.0-cu126` | ✅ Yes       | 12.6 |
 | `am05mhz/pebble-test:base-torch2.8.0-cu128` | ✅ Yes       | 12.8 |
 
 > 👉 To switch: **Edit Pod/Template** → set `Container Image`.

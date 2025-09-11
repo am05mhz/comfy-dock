@@ -70,34 +70,6 @@ export_env_vars() {
     echo 'source /etc/rp_environment' >> ~/.bashrc
 }
 
-# Start jupyter
-# start_jupyter() {
-#     # Default to not using a password
-#     JUPYTER_PASSWORD=""
-
-#     # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
-#     if [[ ${ACCESS_PASSWORD} ]]; then
-#         echo "Starting JupyterLab with the provided password..."
-#         JUPYTER_PASSWORD=${ACCESS_PASSWORD}
-#     else
-#         echo "Starting JupyterLab without a password... (ACCESS_PASSWORD environment variable is not set.)"
-#     fi
-    
-#     mkdir -p /workspace/logs
-#     cd / && \
-#     nohup jupyter lab --allow-root \
-#         --no-browser \
-#         --port=8888 \
-#         --ip=* \
-#         --FileContentsManager.delete_to_trash=False \
-#         --ContentsManager.allow_hidden=True \
-#         --ServerApp.terminado_settings='{"shell_command":["/bin/bash"]}' \
-#         --ServerApp.token="${JUPYTER_PASSWORD}" \
-#         --ServerApp.allow_origin=* \
-#         --ServerApp.preferred_dir=/workspace &> /workspace/logs/jupyterlab.log &
-#     echo "JupyterLab started"
-# }
-
 # Start code-server
 start_code_server() {
     echo "Starting code-server..."
@@ -125,7 +97,7 @@ start_code_server() {
 }
 
 start_app() {
-    echo "Starting code-server..."
+    echo "Starting app..."
     nohup python app.py
 }
 
@@ -140,7 +112,6 @@ execute_script "/pre_start.sh" "Running pre-start script..."
 echo "Pod Started"
 
 setup_ssh
-# start_jupyter
 start_code_server
 start_app
 export_env_vars

@@ -2,7 +2,7 @@
 
 export PYTHONUNBUFFERED=1
 
-source /workspace/venv/bin/activate
+conda activate comfy
 cd /workspace/ComfyUI
 
 echo "**** Displays the available arguments for running ComfyUI. ****" 

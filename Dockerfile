@@ -53,27 +53,26 @@ RUN apt-get install --yes --no-install-recommends \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
-# Install the UV tool from astral-sh
-ADD https://astral.sh/uv/install.sh /uv-installer.sh
-RUN sh /uv-installer.sh && rm /uv-installer.sh
-ENV PATH="/root/.local/bin/:$PATH"
-
-# Install Python and create virtual environment
-RUN uv python install ${PYTHON_VERSION} --default --preview && \
-    uv venv --seed /venv
-ENV PATH="/workspace/venv/bin:/venv/bin:$PATH"
+# install miniconda3
+RUN cd /workspace && \
+    curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    chmod a+x Miniconda3-latest-Linux-x86_64.sh && \
+    ./Miniconda3-latest-Linux-x86_64.sh -b -p /workspace/miniconda3
+ENV PATH="/workspace/miniconda3/:$PATH"
+RUN conda create -n comfy python=${PYTHON_VERSION} -y && \
+    conda activate comfy
 
 # Install essential Python packages and dependencies
 RUN pip install --no-cache-dir -U \
     pip setuptools wheel \
-    jupyterlab jupyterlab_widgets ipykernel ipywidgets \
     huggingface_hub hf_transfer \
     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
     triton \
     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
 
 # Install ComfyUI and ComfyUI Manager
-RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
+RUN cd /workspace && \
+    git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd ComfyUI && \
     pip install --no-cache-dir -r requirements.txt && \
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
@@ -84,12 +83,12 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git && \
     cd custom_nodes/ComfyUI-Manager && \
     pip install --no-cache-dir -r requirements.txt
 
-COPY custom_nodes.txt /custom_nodes.txt
+COPY custom_nodes.txt /workspace/custom_nodes.txt
 
-RUN cd /ComfyUI/custom_nodes && \
-    xargs -n 1 git clone --recursive < /custom_nodes.txt && \
-    find /ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-    find /ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+RUN cd /workspace/ComfyUI/custom_nodes && \
+    xargs -n 1 git clone --recursive < /workspace/custom_nodes.txt && \
+    find /workspace/ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
+    find /workspace/ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 
 # Install Runpod CLI
 RUN wget -qO- cli.runpod.net | sudo bash
@@ -117,12 +116,12 @@ RUN rm -f /etc/ssh/ssh_host_*
 COPY README.md /usr/share/nginx/html/README.md
 
 # Start Scripts
-COPY --chmod=755 scripts/start.sh /
-COPY --chmod=755 scripts/pre_start.sh /
-COPY --chmod=755 scripts/post_start.sh /
+COPY --chmod=755 scripts/start.sh /workspace/
+COPY --chmod=755 scripts/pre_start.sh /workspace/
+COPY --chmod=755 scripts/post_start.sh /workspace/
 
-COPY --chmod=755 scripts/download_presets.sh /
-COPY --chmod=755 scripts/install_custom_nodes.sh /
+COPY --chmod=755 scripts/download_models.sh /workspace/
+# COPY --chmod=755 scripts/install_custom_nodes.sh /
 
 # Welcome Message
 COPY logo/am05mhz.txt /etc/am05mhz.txt
