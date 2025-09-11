@@ -56,6 +56,9 @@ start_code_server() {
 
 start_app() {
     echo "Starting app..."
+    if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
+        export PATH="/workspace/miniconda3/bin:$PATH"
+    fi
     conda activate comfy
     nohup python /workspace/app/app.py
 }

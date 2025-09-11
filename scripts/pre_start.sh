@@ -14,7 +14,9 @@ setup_miniconda() {
     curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
     chmod a+x Miniconda3-latest-Linux-x86_64.sh
     ./Miniconda3-latest-Linux-x86_64.sh -b -p /workspace/miniconda3
-    export PATH="/workspace/miniconda3/bin:$PATH"
+    if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
+        export PATH="/workspace/miniconda3/bin:$PATH"
+    fi
     conda create -n comfy python=${PYTHON_VERSION} -y
     conda activate comfy
     pip install --no-cache-dir -U
@@ -26,6 +28,9 @@ setup_miniconda() {
 }
 
 setup_comfy() {
+    if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
+        export PATH="/workspace/miniconda3/bin:$PATH"
+    fi
     conda activate comfy
     cd /workspace
     git clone https://github.com/comfyanonymous/ComfyUI.git

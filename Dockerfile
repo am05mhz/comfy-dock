@@ -65,8 +65,6 @@ COPY custom_nodes.txt /setup/custom_nodes.txt
 # app
 COPY app/app.py /setup/app/
 COPY app/requirements.txt /setup/app/
-# RUN cd /workspace/ComfyUI && \
-#     pip install --no-cache-dir -r requirements.txt
 
 # Copy the README.md
 COPY README.md /usr/share/nginx/html/README.md
@@ -77,47 +75,13 @@ COPY --chmod=755 scripts/pre_start.sh /setup/
 COPY --chmod=755 scripts/post_start.sh /setup/
 
 COPY --chmod=755 scripts/download_models.sh /setup/
-# COPY --chmod=755 scripts/install_custom_nodes.sh /
 
 # Welcome Message
 COPY logo/am05mhz.txt /etc/am05mhz.txt
 RUN echo 'cat /etc/am05mhz.txt' >> /root/.bashrc
 RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
-# install miniconda3
-# RUN cd /workspace && \
-#     curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
-#     chmod a+x Miniconda3-latest-Linux-x86_64.sh && \
-#     ./Miniconda3-latest-Linux-x86_64.sh -b -p /workspace/miniconda3
-# ENV PATH="/workspace/miniconda3/:$PATH"
-# RUN conda create -n comfy python=${PYTHON_VERSION} -y && \
-#     conda activate comfy
-
-# # Install essential Python packages and dependencies
-# RUN pip install --no-cache-dir -U \
-#     pip setuptools wheel \
-#     huggingface_hub hf_transfer \
-#     numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
-#     triton \
-#     torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
-
-# Install ComfyUI and ComfyUI Manager
-# RUN cd /workspace && \
-#     git clone https://github.com/comfyanonymous/ComfyUI.git && \
-#     cd ComfyUI && \
-#     pip install --no-cache-dir -r requirements.txt && \
-#     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager && \
-#     cd custom_nodes/ComfyUI-Manager && \
-#     pip install --no-cache-dir -r requirements.txt && \
-#     cd ../.. && \
-#     git clone https://github.com/QuietNoise/ComfyUI-Queue-Manager.git custom_nodes/ComfyUI-Queue-Manager && \
-#     cd custom_nodes/ComfyUI-Manager && \
-#     pip install --no-cache-dir -r requirements.txt
-
-# RUN cd /workspace/ComfyUI/custom_nodes && \
-#     xargs -n 1 git clone --recursive < /workspace/custom_nodes.txt && \
-#     find /workspace/ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \; && \
-#     find /workspace/ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+ENV PATH="/workspace/miniconda3/bin:$PATH"
 
 # Install Runpod CLI
 RUN wget -qO- cli.runpod.net | sudo bash
