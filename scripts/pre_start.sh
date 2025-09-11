@@ -9,53 +9,47 @@ echo "$TZ" | sudo tee /etc/timezone > /dev/null
 sudo ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
 sudo dpkg-reconfigure -f noninteractive tzdata
 
-# echo "**** syncing ComfyUI to workspace, please wait ****"
-# if [ -d /ComfyUI ]; then
+setup_miniconda() {
+    cd /workspace
+    curl -LO https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+    chmod a+x Miniconda3-latest-Linux-x86_64.sh
+    ./Miniconda3-latest-Linux-x86_64.sh -b -p /workspace/miniconda3
+    export PATH="/workspace/miniconda3/:$PATH"
+    conda create -n comfy python=${PYTHON_VERSION} -y
+    conda activate comfy
+    pip install --no-cache-dir -U
+    pip setuptools wheel \
+        huggingface_hub hf_transfer \
+        numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
+        triton \
+        torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+}
 
-#     SRC_MODELS="/ComfyUI/models"
-#     DST_MODELS="/workspace/ComfyUI/models"
+setup_comfy() {
+    cd /workspace
+    git clone https://github.com/comfyanonymous/ComfyUI.git
+    cd ComfyUI
+    pip install --no-cache-dir -r requirements.txt
+    git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager
+    cd custom_nodes/ComfyUI-Manager
+    pip install --no-cache-dir -r requirements.txt
+    cd ../.. && \
+    git clone https://github.com/QuietNoise/ComfyUI-Queue-Manager.git custom_nodes/ComfyUI-Queue-Manager
+    cd custom_nodes/ComfyUI-Manager
+    pip install --no-cache-dir -r requirements.txt
+    
+    cd /workspace/ComfyUI/custom_nodes
+    xargs -n 1 git clone --recursive < /workspace/custom_nodes.txt
+    find /workspace/ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \;
+    find /workspace/ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+}
 
-#     EXCLUDE_MODELS=""
-
-#     if [ -d "$DST_MODELS" ] && [ "$(ls -A "$DST_MODELS")" ]; then
-#         for d in "$DST_MODELS"/*/; do
-#             [ -d "$d" ] || continue
-#             folder_name=$(basename "$d")
-#             EXCLUDE_MODELS="$EXCLUDE_MODELS --exclude='models/$folder_name/**'"
-#         done
-#         echo "**** Excluding existing model folders: $EXCLUDE_MODELS ****"
-#     fi
-
-#     if [ -d /workspace/ComfyUI/output ]; then
-#         EXCLUDE_MODELS="$EXCLUDE_MODELS --exclude='output/'"
-#         echo "**** Excluding existing output folder ****"
-#     fi
-
-#     rsync -au --remove-source-files $EXCLUDE_MODELS /ComfyUI/ /workspace/ComfyUI/ && rm -rf /ComfyUI
-
-# else
-#     echo "Skip: /ComfyUI does not exist."
-# fi
-
-# if [ "${INSTALL_SAGEATTENTION,,}" = "true" ]; then
-#     if pip show sageattention > /dev/null 2>&1; then
-#         echo "**** SageAttention2 is already installed. Skipping installation. ****"
-#     else
-#         echo "**** SageAttention2 is not installed. Installing, please wait.... (This may take a long time, approximately 5+ minutes.) ****"
-#         git clone https://github.com/thu-ml/SageAttention.git /SageAttention
-#         cd /SageAttention
-#         python setup.py install
-#         echo "**** SageAttention2 installation completed. ****"
-#     fi
-# fi
-
-# if [ "${INSTALL_CUSTOM_NODES,,}" = "true" ]; then
-#     if [ -f /install_custom_nodes.sh ]; then
-#         echo "**** INSTALL_CUSTOM_NODES is set. Running /install_custom_nodes.sh ****"
-#         /install_custom_nodes.sh
-#     else
-#         echo "**** /install_custom_nodes.sh not found. Skipping. ****"
-#     fi
-# fi
-
-/workspace/download_models.sh --quiet "${PRESET_DOWNLOAD}"
+if [ -f "/workspace" ]; then
+    if [ -z "/workspace/miniconda3" ]; then
+        setup_miniconda()
+    fi    
+    if [ -z "/workspace/ComfyUI" ]; then
+        setup_comfy()
+        /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
+    fi    
+fi

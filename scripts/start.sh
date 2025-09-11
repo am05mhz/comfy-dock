@@ -107,7 +107,7 @@ start_app() {
 
 start_nginx
 
-execute_script "/pre_start.sh" "Running pre-start script..."
+execute_script "/setup/pre_start.sh" "Running pre-start script..."
 
 echo "Pod Started"
 
@@ -116,7 +116,7 @@ start_code_server
 start_app
 export_env_vars
 
-execute_script "/post_start.sh" "Running post-start script..."
+execute_script "/setup/post_start.sh" "Running post-start script..."
 
 echo "Start script(s) finished, pod is ready to use."
 
