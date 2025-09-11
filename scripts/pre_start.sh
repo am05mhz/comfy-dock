@@ -37,6 +37,10 @@ setup_comfy() {
     git clone https://github.com/QuietNoise/ComfyUI-Queue-Manager.git custom_nodes/ComfyUI-Queue-Manager
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
+
+    copy -r /setup/app /workspace/
+    cd /workspace/app
+    pip install --no-cache-dir -r requirements.txt
     
     cd /workspace/ComfyUI/custom_nodes
     xargs -n 1 git clone --recursive < /workspace/custom_nodes.txt

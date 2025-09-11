@@ -98,7 +98,7 @@ start_code_server() {
 
 start_app() {
     echo "Starting app..."
-    nohup python app.py
+    nohup python /workspace/app/app.py
 }
 
 # ---------------------------------------------------------------------------- #
