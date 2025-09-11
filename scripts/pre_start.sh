@@ -48,11 +48,11 @@ setup_comfy() {
     find /workspace/ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 }
 
-if [ -f "/workspace" ]; then
-    if [ -z "/workspace/miniconda3" ]; then
+if [ -d "/workspace" ]; then
+    if [ ! -d "/workspace/miniconda3" ]; then
         setup_miniconda
     fi    
-    if [ -z "/workspace/ComfyUI" ]; then
+    if [ ! -d "/workspace/ComfyUI" ]; then
         setup_comfy
         /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
     fi    
