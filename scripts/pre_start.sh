@@ -50,10 +50,10 @@ setup_comfy() {
 
 if [ -f "/workspace" ]; then
     if [ -z "/workspace/miniconda3" ]; then
-        setup_miniconda()
+        setup_miniconda
     fi    
     if [ -z "/workspace/ComfyUI" ]; then
-        setup_comfy()
+        setup_comfy
         /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
     fi    
 fi

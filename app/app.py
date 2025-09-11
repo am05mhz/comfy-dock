@@ -11,6 +11,7 @@ import time
 import base64
 import logging
 import threading
+import hashlib
 
 # Check for correct websocket package
 try:
@@ -1569,25 +1570,55 @@ def api_generate():
         
         # Parse inputs
         inputs = json.loads(request.form.get('inputs', '{}'))
-        
+
+        sha256_hash = hashlib.sha256()
+
+        # image urls
+        img_urls = request.form.items()
+        for key, img_url in img_urls:
+            if key.startswith('img_url_'):
+                input_id = key[8:]  # Remove 'img_url_' prefix
+
+                try:
+                    print(f"Downloading {img_url}")
+                    response = requests.get(img_url, stream=True)
+                    response.raise_for_status()  # Raise an HTTPError for bad responses (4xx or 5xx)
+
+                    sha256_hash.update(img_url)
+                    fname = sha256_hash.hexdigest()
+                    fpath = os.path.join(config.UPLOAD_FOLDER, fname)
+                    with open(fname, 'wb') as f:
+                        for chunk in response.iter_content(chunk_size=8192):
+                            f.write(chunk)
+
+                    # Upload to ComfyUI
+                    comfy_filename = comfy_client.upload_image(fpath, fname)
+                    inputs[input_id] = comfy_filename
+                    
+                    logger.info(f"Uploaded {img_url} as {comfy_filename}")
+                except requests.exceptions.HTTPError as e:
+                    print(f"HTTP Error: {e}")
+                except requests.exceptions.RequestException as e:
+                    print(f"Request Error: {e}")
+
         # Handle file uploads
-        for key in request.files:
-            if key.startswith('file_'):
-                input_id = key[5:]  # Remove 'file_' prefix
-                file = request.files[key]
+        # for key in request.files:
+        #     if key.startswith('file_'):
+        #         input_id = key[5:]  # Remove 'file_' prefix
+        #         file = request.files[key]
                 
-                # Save uploaded file
-                filename = secure_filename(file.filename)
-                timestamp = str(int(time.time() * 1000))
-                unique_filename = f"{timestamp}_{filename}"
-                filepath = os.path.join(config.UPLOAD_FOLDER, unique_filename)
-                file.save(filepath)
+        #         # Save uploaded file
+        #         filename = secure_filename(file.filename)
+        #         timestamp = str(int(time.time() * 1000))
+        #         unique_filename = f"{timestamp}_{filename}"
+        #         filepath = os.path.join(config.UPLOAD_FOLDER, unique_filename)
+        #         file.save(filepath)
                 
-                # Upload to ComfyUI
-                comfy_filename = comfy_client.upload_image(filepath, unique_filename)
-                inputs[input_id] = comfy_filename
+        #         # Upload to ComfyUI
+        #         comfy_filename = comfy_client.upload_image(filepath, unique_filename)
+        #         inputs[input_id] = comfy_filename
                 
-                logger.info(f"Uploaded {filename} as {comfy_filename}")
+        #         logger.info(f"Uploaded {filename} as {comfy_filename}")
         
         # Apply inputs to workflow
         workflow = workflow_manager.apply_inputs(workflow_data['workflow'], inputs)

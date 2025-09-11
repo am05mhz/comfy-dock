@@ -21,3 +21,14 @@ https://github.com/alexopus/ComfyUI-Image-Saver.git
 https://github.com/jupo-ai/comfy-ex-tagcomplete.git
 https://github.com/Kosinkadink/ComfyUI-VideoHelperSuite.git
 https://github.com/orssorbit/ComfyUI-wanBlockswap.git
+https://github.com/Nikosis/ComfyUI-Nikosis-Preprocessors.git
+https://github.com/za-wa-n-go/ComfyUI_Zwng_Nodes.git
+https://github.com/Stability-AI/stability-ComfyUI-nodes.git
+https://github.com/lldacing/ComfyUI_BiRefNet_ll.git
+https://github.com/kijai/ComfyUI-DepthAnythingV2.git
+https://github.com/BadCafeCode/masquerade-nodes-comfyui.git
+https://github.com/chflame163/ComfyUI_LayerStyle.git
+https://github.com/chflame163/ComfyUI_LayerStyle_Advance.git
+https://github.com/1038lab/ComfyUI-RMBG.git
+https://github.com/Fannovel16/comfyui_controlnet_aux.git
+https://github.com/cubiq/ComfyUI_IPAdapter_plus.git
