@@ -13,6 +13,7 @@ setup_ssh() {
         echo "$PUBLIC_KEY" >> ~/.ssh/authorized_keys
         chmod 700 -R ~/.ssh
 
+        ssh-keygen -A       # regenerate new keys
         service ssh start
     fi
 }
