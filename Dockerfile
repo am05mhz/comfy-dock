@@ -53,10 +53,15 @@ RUN apt-get install --yes --no-install-recommends \
         openssh-server ca-certificates && \
     apt-get autoremove -y && apt-get clean && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*
 
+EXPOSE 22 3000 5000 8080
+
 # NGINX Proxy
 COPY proxy/nginx.conf /etc/nginx/nginx.conf
 COPY proxy/snippets /etc/nginx/snippets
 COPY proxy/readme.html /usr/share/nginx/html/readme.html
+
+# Copy the README.md
+COPY README.md /usr/share/nginx/html/README.md
 
 # Copy setup files
 RUN mkdir -p /setup/app
@@ -65,9 +70,6 @@ COPY custom_nodes.txt /setup/custom_nodes.txt
 # app
 COPY app/app.py /setup/app/
 COPY app/requirements.txt /setup/app/
-
-# Copy the README.md
-COPY README.md /usr/share/nginx/html/README.md
 
 # Start Scripts
 COPY --chmod=755 scripts/start.sh /setup/
@@ -91,8 +93,6 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
-
-EXPOSE 22 3000 5000 8080
 
 # Set entrypoint to the start script
 CMD ["/setup/start.sh"]

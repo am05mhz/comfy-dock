@@ -15,7 +15,7 @@
 
 | Image Name                                  | Custom Nodes | CUDA |
 | ------------------------------------------- | ------------ | ---- |
-| `am05mhz/pebble-test:base-torch2.8.0-cu128` | ✅ Yes       | 12.8 |
+| `am05mhz/pebble-test:base-torch2.8.0-cu124` | ✅ Yes       | 12.4 |
 
 > 👉 To switch: **Edit Pod/Template** → set `Container Image`.
 
@@ -25,10 +25,8 @@
 
 | Variable                | Description                                                                | Default   |
 | ----------------------- | -------------------------------------------------------------------------- | --------- |
-| `ACCESS_PASSWORD`       | Password for JupyterLab & code-server                                      | (unset)   |
 | `TIME_ZONE`             | [Timezone](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) (e.g., `Asia/Seoul`)   | `Etc/UTC` |
 | `COMFYUI_EXTRA_ARGS`    | Extra ComfyUI options (e.g. `--fast`)                        | (unset)   |
-| `INSTALL_SAGEATTENTION` | Install [SageAttention2](https://github.com/thu-ml/SageAttention) on start (`True`/`False`) | `False`    |
 | `PRESET_DOWNLOAD`       | Download model presets at startup (comma-separated list). **See below**.                  | (unset)   |
 
 > 👉 To set: **Edit Pod/Template** → **Add Environment Variable** (Key/Value).
@@ -68,7 +66,7 @@ bash /download_presets.sh PRESET1,PRESET2,...
 
 * **OS**: Ubuntu 24.04 (22.02 for CUDA 12.4)
 * **Python**: 3.13
-* **Framework**: [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/Comfy-Org/ComfyUI-Manager) + [JupyterLab](https://jupyter.org/) + [code-server](https://github.com/coder/code-server)
+* **Framework**: [ComfyUI](https://github.com/comfyanonymous/ComfyUI) + [ComfyUI Manager](https://github.com/Comfy-Org/ComfyUI-Manager) + [code-server](https://github.com/coder/code-server)
 * **Libraries**: PyTorch 2.8.0, CUDA (12.4–12.8), Triton, [hf\_hub](https://huggingface.co/docs/huggingface_hub), [nvtop](https://github.com/Syllo/nvtop)
 
 #### Custom Nodes (only in **base** image)

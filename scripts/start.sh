@@ -5,6 +5,18 @@ set -e  # Exit the script if any statement returns a non-true return value
 #                          Function Definitions                                #
 # ---------------------------------------------------------------------------- #
 
+# Setup ssh
+setup_ssh() {
+    if [[ $PUBLIC_KEY ]]; then
+        echo "Setting up SSH..."
+        mkdir -p ~/.ssh
+        echo "$PUBLIC_KEY" >> ~/.ssh/authorized_keys
+        chmod 700 -R ~/.ssh
+
+        service ssh start
+    fi
+}
+
 # Start nginx service
 start_nginx() {
     echo "Starting Nginx service..."
@@ -67,6 +79,7 @@ start_app() {
 #                               Main Program                                   #
 # ---------------------------------------------------------------------------- #
 
+setup_ssh
 start_nginx
 
 execute_script "/setup/pre_start.sh" "Running pre-start script..."
