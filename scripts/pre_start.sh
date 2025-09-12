@@ -17,8 +17,10 @@ setup_miniconda() {
     if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
         export PATH="/workspace/miniconda3/bin:$PATH"
     fi
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
+    conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
     conda create -n comfy python=${PYTHON_VERSION} -y
-    conda activate comfy
+    source /workspace/miniconda3/bin/activate comfy
     pip install --no-cache-dir -U
     pip setuptools wheel \
         huggingface_hub hf_transfer \
