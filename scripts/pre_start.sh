@@ -46,7 +46,7 @@ setup_comfy() {
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
 
-    copy -r /setup/app /workspace/
+    mv -r /setup/app /workspace/app
     cd /workspace/app
     pip install --no-cache-dir -r requirements.txt
     
