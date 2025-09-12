@@ -72,7 +72,8 @@ start_app() {
         export PATH="/workspace/miniconda3/bin:$PATH"
     fi
     source /workspace/miniconda3/bin/activate comfy
-    nohup python /workspace/app/app.py
+    cd /workspace/app
+    nohup python app.py
 }
 
 # ---------------------------------------------------------------------------- #

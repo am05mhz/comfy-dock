@@ -68,8 +68,7 @@ RUN mkdir -p /setup/app
 COPY custom_nodes.txt /setup/custom_nodes.txt
 
 # app
-COPY app/app.py /setup/app/
-COPY app/requirements.txt /setup/app/
+COPY app /setup/app
 
 # Start Scripts
 COPY --chmod=755 scripts/start.sh /setup/

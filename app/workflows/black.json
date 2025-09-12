@@ -1,0 +1,117 @@
+{
+  "13": {
+    "inputs": {
+      "width": [
+        "46",
+        0
+      ],
+      "height": [
+        "46",
+        1
+      ],
+      "color": "#FFFFFF"
+    },
+    "class_type": "LayerUtility: ColorImage",
+    "_meta": {
+      "title": "LayerUtility: ColorImage"
+    }
+  },
+  "41": {
+    "inputs": {
+      "image": "ComfyUI_01594_.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "44": {
+    "inputs": {
+      "image": [
+        "51",
+        0
+      ]
+    },
+    "class_type": "SplitImageWithAlpha",
+    "_meta": {
+      "title": "Split Image with Alpha"
+    }
+  },
+  "45": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "13",
+        0
+      ],
+      "source": [
+        "44",
+        0
+      ],
+      "mask": [
+        "51",
+        1
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "46": {
+    "inputs": {
+      "image": [
+        "51",
+        0
+      ]
+    },
+    "class_type": "Get Image Size",
+    "_meta": {
+      "title": "Get Image Size"
+    }
+  },
+  "50": {
+    "inputs": {
+      "custom_path": "",
+      "custom_filename": "",
+      "filename_prefix": "comfyui",
+      "timestamp": "None",
+      "dpi": 300,
+      "format": "png",
+      "quality": 100,
+      "meta_data": false,
+      "blind_watermark": "",
+      "save_workflow_as_json": false,
+      "preview": true,
+      "images": [
+        "45",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: SaveImagePlusV2",
+    "_meta": {
+      "title": "LayerUtility: SaveImagePlus V2(Advance)"
+    }
+  },
+  "51": {
+    "inputs": {
+      "model": "BiRefNet-HR",
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "invert_output": false,
+      "refine_foreground": false,
+      "background": "Color",
+      "background_color": "#222222",
+      "image": [
+        "41",
+        0
+      ]
+    },
+    "class_type": "BiRefNetRMBG",
+    "_meta": {
+      "title": "BiRefNet Remove Background (RMBG)"
+    }
+  }
+}

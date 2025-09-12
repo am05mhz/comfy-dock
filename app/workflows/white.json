@@ -1,0 +1,466 @@
+{
+  "1": {
+    "inputs": {
+      "ckpt_name": "juggernautXL_ragnarokBy.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "2": {
+    "inputs": {
+      "text": "Product Photography, white background ,masterpiece, best quality, amazing quality, ultra-detailed, newest, extremely detailed, very aesthetic, high quality, realistic,studio light, studio shot,deep shadows,",
+      "clip": [
+        "47",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "3": {
+    "inputs": {
+      "text": "worst quality, bad quality, normal quality, text, signature, logo, artist name, deformed, bad hand, nsfw, naked, nude, nipples, pussy, navel, bare legs, bare foot, human,",
+      "clip": [
+        "47",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "4": {
+    "inputs": {
+      "image": "PXL_20250627_075757847.MP.jpg"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "5": {
+    "inputs": {
+      "width": 1024,
+      "height": 0,
+      "interpolation": "nearest",
+      "method": "keep proportion",
+      "condition": "always",
+      "multiple_of": 0,
+      "image": [
+        "45",
+        0
+      ]
+    },
+    "class_type": "ImageResize+",
+    "_meta": {
+      "title": "🔧 Image Resize"
+    }
+  },
+  "6": {
+    "inputs": {
+      "ckpt_name": "depth_anything_vitl14.pth",
+      "resolution": 1024,
+      "image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "DepthAnythingPreprocessor",
+    "_meta": {
+      "title": "Depth Anything"
+    }
+  },
+  "7": {
+    "inputs": {
+      "images": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "PreviewImage",
+    "_meta": {
+      "title": "Preview Image"
+    }
+  },
+  "8": {
+    "inputs": {
+      "seed": 860513193789656,
+      "steps": 28,
+      "cfg": 3.5,
+      "sampler_name": "dpmpp_sde",
+      "scheduler": "karras",
+      "denoise": 1,
+      "model": [
+        "24",
+        0
+      ],
+      "positive": [
+        "14",
+        0
+      ],
+      "negative": [
+        "14",
+        1
+      ],
+      "latent_image": [
+        "14",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "9": {
+    "inputs": {
+      "samples": [
+        "8",
+        0
+      ],
+      "vae": [
+        "1",
+        2
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "12": {
+    "inputs": {
+      "strength": 1,
+      "start_percent": 0,
+      "end_percent": 1,
+      "positive": [
+        "2",
+        0
+      ],
+      "negative": [
+        "3",
+        0
+      ],
+      "control_net": [
+        "13",
+        0
+      ],
+      "image": [
+        "6",
+        0
+      ]
+    },
+    "class_type": "ControlNetApplyAdvanced",
+    "_meta": {
+      "title": "Apply ControlNet"
+    }
+  },
+  "13": {
+    "inputs": {
+      "control_net_name": "control-lora-depth-rank256.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "14": {
+    "inputs": {
+      "noise_mask": true,
+      "positive": [
+        "12",
+        0
+      ],
+      "negative": [
+        "12",
+        1
+      ],
+      "vae": [
+        "1",
+        2
+      ],
+      "pixels": [
+        "5",
+        0
+      ],
+      "mask": [
+        "25",
+        0
+      ]
+    },
+    "class_type": "InpaintModelConditioning",
+    "_meta": {
+      "title": "InpaintModelConditioning"
+    }
+  },
+  "17": {
+    "inputs": {
+      "mask": [
+        "38",
+        1
+      ]
+    },
+    "class_type": "MaskPreview+",
+    "_meta": {
+      "title": "🔧 Mask Preview"
+    }
+  },
+  "18": {
+    "inputs": {
+      "weight": 0.5,
+      "weight_type": "linear",
+      "combine_embeds": "concat",
+      "start_at": 0,
+      "end_at": 1,
+      "embeds_scaling": "V only",
+      "model": [
+        "19",
+        0
+      ],
+      "ipadapter": [
+        "19",
+        1
+      ],
+      "image": [
+        "22",
+        0
+      ],
+      "clip_vision": [
+        "21",
+        0
+      ]
+    },
+    "class_type": "IPAdapterAdvanced",
+    "_meta": {
+      "title": "IPAdapter Advanced"
+    }
+  },
+  "19": {
+    "inputs": {
+      "preset": "PLUS (high strength)",
+      "model": [
+        "1",
+        0
+      ]
+    },
+    "class_type": "IPAdapterUnifiedLoader",
+    "_meta": {
+      "title": "IPAdapter Unified Loader"
+    }
+  },
+  "20": {
+    "inputs": {
+      "image": "test_empty.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "21": {
+    "inputs": {
+      "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors"
+    },
+    "class_type": "CLIPVisionLoader",
+    "_meta": {
+      "title": "Load CLIP Vision"
+    }
+  },
+  "22": {
+    "inputs": {
+      "interpolation": "LANCZOS",
+      "crop_position": "center",
+      "sharpening": 0.15,
+      "image": [
+        "20",
+        0
+      ]
+    },
+    "class_type": "PrepImageForClipVision",
+    "_meta": {
+      "title": "Prep Image For ClipVision"
+    }
+  },
+  "23": {
+    "inputs": {
+      "mask": [
+        "38",
+        1
+      ]
+    },
+    "class_type": "InvertMask",
+    "_meta": {
+      "title": "InvertMask"
+    }
+  },
+  "24": {
+    "inputs": {
+      "model": [
+        "18",
+        0
+      ]
+    },
+    "class_type": "DifferentialDiffusion",
+    "_meta": {
+      "title": "Differential Diffusion"
+    }
+  },
+  "25": {
+    "inputs": {
+      "expand": 0,
+      "tapered_corners": true,
+      "mask": [
+        "23",
+        0
+      ]
+    },
+    "class_type": "GrowMask",
+    "_meta": {
+      "title": "GrowMask"
+    }
+  },
+  "34": {
+    "inputs": {
+      "x": 0,
+      "y": 0,
+      "resize_source": false,
+      "destination": [
+        "9",
+        0
+      ],
+      "source": [
+        "5",
+        0
+      ],
+      "mask": [
+        "38",
+        1
+      ]
+    },
+    "class_type": "ImageCompositeMasked",
+    "_meta": {
+      "title": "ImageCompositeMasked"
+    }
+  },
+  "36": {
+    "inputs": {
+      "custom_path": "",
+      "custom_filename": "",
+      "filename_prefix": "comfyui",
+      "timestamp": "None",
+      "dpi": 96,
+      "format": "png",
+      "quality": 80,
+      "meta_data": false,
+      "blind_watermark": "",
+      "save_workflow_as_json": false,
+      "preview": true,
+      "images": [
+        "34",
+        0
+      ]
+    },
+    "class_type": "LayerUtility: SaveImagePlusV2",
+    "_meta": {
+      "title": "LayerUtility: SaveImagePlus V2(Advance)"
+    }
+  },
+  "38": {
+    "inputs": {
+      "model": "BiRefNet-HR",
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "invert_output": false,
+      "refine_foreground": false,
+      "background": "Alpha",
+      "background_color": "#222222",
+      "image": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "BiRefNetRMBG",
+    "_meta": {
+      "title": "BiRefNet Remove Background (RMBG)"
+    }
+  },
+  "45": {
+    "inputs": {
+      "model": "BiRefNet-HR",
+      "mask_blur": 0,
+      "mask_offset": 0,
+      "invert_output": false,
+      "refine_foreground": false,
+      "background": "Color",
+      "background_color": "#222222",
+      "image": [
+        "4",
+        0
+      ]
+    },
+    "class_type": "BiRefNetRMBG",
+    "_meta": {
+      "title": "BiRefNet Remove Background (RMBG)"
+    }
+  },
+  "46": {
+    "inputs": {
+      "stop_at_clip_layer": -2,
+      "clip": [
+        "1",
+        1
+      ]
+    },
+    "class_type": "CLIPSetLastLayer",
+    "_meta": {
+      "title": "CLIP Set Last Layer"
+    }
+  },
+  "47": {
+    "inputs": {
+      "lora_name": "sdxl/Sleek_Product_Design.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "prompt": "",
+      "example": "[none]",
+      "model": [
+        "48",
+        0
+      ],
+      "clip": [
+        "48",
+        1
+      ]
+    },
+    "class_type": "LoraLoader|pysssss",
+    "_meta": {
+      "title": "Lora Loader 🐍"
+    }
+  },
+  "48": {
+    "inputs": {
+      "lora_name": "sdxl/Product Photography.safetensors",
+      "strength_model": 1,
+      "strength_clip": 1,
+      "prompt": "",
+      "example": "[none]",
+      "model": [
+        "1",
+        0
+      ],
+      "clip": [
+        "46",
+        0
+      ]
+    },
+    "class_type": "LoraLoader|pysssss",
+    "_meta": {
+      "title": "Lora Loader 🐍"
+    }
+  }
+}
