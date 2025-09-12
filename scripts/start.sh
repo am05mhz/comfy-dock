@@ -71,7 +71,7 @@ start_app() {
     if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
         export PATH="/workspace/miniconda3/bin:$PATH"
     fi
-    conda activate comfy
+    source /workspace/miniconda3/bin/activate comfy
     nohup python /workspace/app/app.py
 }
 

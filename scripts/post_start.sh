@@ -2,7 +2,7 @@
 
 export PYTHONUNBUFFERED=1
 
-conda activate comfy
+source /workspace/miniconda3/bin/activate comfy
 cd /workspace/ComfyUI
 
 echo "**** Displays the available arguments for running ComfyUI. ****" 
