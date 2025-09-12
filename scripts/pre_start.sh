@@ -33,7 +33,7 @@ setup_comfy() {
     if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
         export PATH="/workspace/miniconda3/bin:$PATH"
     fi
-    conda activate comfy
+    source /workspace/miniconda3/bin/activate comfy
     cd /workspace
     git clone https://github.com/comfyanonymous/ComfyUI.git
     cd ComfyUI
@@ -41,19 +41,10 @@ setup_comfy() {
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
-    cd ../.. && \
+    cd ../..
     git clone https://github.com/QuietNoise/ComfyUI-Queue-Manager.git custom_nodes/ComfyUI-Queue-Manager
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
-
-    mv -r /setup/app /workspace/app
-    cd /workspace/app
-    pip install --no-cache-dir -r requirements.txt
-    
-    cd /workspace/ComfyUI/custom_nodes
-    xargs -n 1 git clone --recursive < /workspace/custom_nodes.txt
-    find /workspace/ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \;
-    find /workspace/ComfyUI/custom_nodes -name "install.py" -exec python {} \;
 }
 
 if [ -d "/workspace" ]; then
@@ -66,4 +57,18 @@ if [ -d "/workspace" ]; then
         setup_comfy
         /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
     fi    
+    if [ ! -f "/workspace/custom_nodes.txt" ]; then
+        echo "*** installing custom nodes ***"
+        cp /setup/custom_nodes.txt /workspace/custom_nodes.txt
+        cd /workspace/ComfyUI/custom_nodes
+        xargs -n 1 git clone --recursive < /workspace/custom_nodes.txt
+        find /workspace/ComfyUI/custom_nodes -name "requirements.txt" -exec pip install --no-cache-dir -r {} \;
+        find /workspace/ComfyUI/custom_nodes -name "install.py" -exec python {} \;
+    fi
+    if [ ! -d "/workspace/app" ]; then
+        echo "*** installing app ***"
+        cp -r /setup/app /workspace/app
+        cd /workspace/app
+        pip install --no-cache-dir -r requirements.txt    
+    fi
 fi
