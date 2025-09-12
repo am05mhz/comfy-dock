@@ -19,14 +19,14 @@ setup_miniconda() {
     fi
     conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
     conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
-    conda create -n comfy python=${PYTHON_VERSION} -y
+    conda create -n comfy python=$PYTHON_VERSION -y
     source /workspace/miniconda3/bin/activate comfy
     pip install --no-cache-dir -U \
         pip setuptools wheel \
         huggingface_hub hf_transfer \
         numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
         triton \
-        torch==${TORCH_VERSION} torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/${CUDA_VERSION}
+        torch==$TORCH_VERSION torchvision torchaudio --extra-index-url "https://download.pytorch.org/whl/${CUDA_VERSION}"
 }
 
 setup_comfy() {
