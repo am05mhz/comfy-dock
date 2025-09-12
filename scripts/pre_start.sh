@@ -33,7 +33,7 @@ setup_comfy() {
     if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
         export PATH="/workspace/miniconda3/bin:$PATH"
     fi
-    conda activate comfy
+    source /workspace/miniconda3/bin/activate comfy
     cd /workspace
     git clone https://github.com/comfyanonymous/ComfyUI.git
     cd ComfyUI
@@ -41,12 +41,11 @@ setup_comfy() {
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
-    cd ../.. && \
+    cd ../..
     git clone https://github.com/QuietNoise/ComfyUI-Queue-Manager.git custom_nodes/ComfyUI-Queue-Manager
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
 
-    mv -r /setup/app /workspace/app
     cd /workspace/app
     pip install --no-cache-dir -r requirements.txt
     
@@ -57,6 +56,12 @@ setup_comfy() {
 }
 
 if [ -d "/workspace" ]; then
+    if [ -d "/setup/app" ]; then
+        cp -r /setup/app /workspace/app
+    fi
+    if [ -f "/setup/custom_nodes.txt" ]; then
+        cp /setup/custom_nodes.txt /workspace/custom_nodes.txt
+    fi
     if [ ! -d "/workspace/miniconda3" ]; then
         echo "*** installing miniconda ***"
         setup_miniconda
