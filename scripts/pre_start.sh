@@ -50,6 +50,9 @@ setup_comfy() {
 if [ -d "/workspace" ]; then
     if [ -d "/setup/app" ]; then
         cp -r /setup/app /workspace/app
+        source /workspace/miniconda3/bin/activate comfy
+        cd /workspace/app
+        pip install --no-cache-dir -r requirements.txt
     fi
     if [ -f "/setup/custom_nodes.txt" ]; then
         cp /setup/custom_nodes.txt /workspace/custom_nodes.txt
