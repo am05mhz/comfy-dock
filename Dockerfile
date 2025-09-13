@@ -84,10 +84,10 @@ COPY --chmod=755 scripts/download_models.sh /setup/
 # Welcome Message
 COPY logo/am05mhz.txt /etc/am05mhz.txt
 RUN echo 'cat /etc/am05mhz.txt' >> /root/.bashrc
-RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
 # Install Runpod CLI
-RUN cat runpodctl.sh | sudo bash
+COPY runpodctl.sh /setup/runpodctl.sh
+RUN cat /setup/runpodctl.sh | sudo bash
 
 # Install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
