@@ -55,7 +55,6 @@ if [ -d "/workspace" ]; then
     if [ ! -d "/workspace/ComfyUI" ]; then
         echo "*** installing ComfyUI ***"
         setup_comfy
-        /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
     fi    
     if [ ! -f "/workspace/custom_nodes.txt" ]; then
         echo "*** installing custom nodes ***"
@@ -71,4 +70,5 @@ if [ -d "/workspace" ]; then
         cd /workspace/app
         pip install --no-cache-dir -r requirements.txt    
     fi
+    /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
 fi
