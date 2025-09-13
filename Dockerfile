@@ -86,8 +86,6 @@ COPY logo/am05mhz.txt /etc/am05mhz.txt
 RUN echo 'cat /etc/am05mhz.txt' >> /root/.bashrc
 RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
-ENV PATH="/workspace/miniconda3/bin:$PATH"
-
 # Install Runpod CLI
 RUN wget -qO- cli.runpod.net | sudo bash
 
@@ -96,6 +94,8 @@ RUN curl -fsSL https://code-server.dev/install.sh | sh
 
 # Remove existing SSH host keys
 RUN rm -f /etc/ssh/ssh_host_*
+
+ENV PATH="/workspace/miniconda3/bin:$PATH"
 
 # Set entrypoint to the start script
 CMD ["/setup/start.sh"]
