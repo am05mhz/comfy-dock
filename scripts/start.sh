@@ -74,7 +74,7 @@ start_app() {
     fi
     source /workspace/miniconda3/bin/activate comfy
     cd /workspace/app
-    if [[ -n "${DONT_RUN_APP}" ]]; then
+    if [[ $RUN_APP ]]; then
         nohup python app.py
     fi
 }
