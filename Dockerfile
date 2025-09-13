@@ -87,7 +87,7 @@ RUN echo 'cat /etc/am05mhz.txt' >> /root/.bashrc
 RUN echo 'echo -e "\nFor detailed documentation and guides, please visit:\n\033[1;34mhttps://docs.runpod.io/\033[0m and \033[1;34mhttps://blog.runpod.io/\033[0m\n\n"' >> /root/.bashrc
 
 # Install Runpod CLI
-RUN wget -qO- cli.runpod.net | sudo bash
+RUN cat runpodctl.sh | sudo bash
 
 # Install code-server
 RUN curl -fsSL https://code-server.dev/install.sh | sh
