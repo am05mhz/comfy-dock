@@ -7,6 +7,11 @@ if [[ "$1" == "--quiet" ]]; then
     shift
 fi
 
+WGET_HF_TOKEN=""
+if [[ $HF_TOKEN ]]; then
+    WGET_HF_TOKEN="--header='Authorization: Bearer ${HF_TOKEN}"
+fi
+
 # download_if_missing <URL> <TARGET_DIR>
 download_if_missing() {
     local url="$1"
@@ -29,7 +34,7 @@ download_if_missing() {
     mkdir -p "$tmpdir"
     local tmpfile="$tmpdir/${filename}.part"
 
-    if wget $WGET_OPTS -O "$tmpfile" "$url"; then
+    if wget $WGET_OPTS $WGET_HF_TOKEN -O "$tmpfile" "$url"; then
         mv -f "$tmpfile" "$filepath"
         echo "Download completed: $filepath"
     else
@@ -47,15 +52,15 @@ download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/res
 download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"       # 31.1MB
 
 # flux
-download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/text_encoder/model.safetensors" "/workspace/ComfyUI/models/text_encoders"    # 246MB
-download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/vae/diffusion_pytorch_model.safetensors" "/workspace/ComfyUI/models/vae"     # 168MB
-download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/blob/main/flux1-schnell.safetensors" "/workspace/ComfyUI/models/unet"                  # 23.8GB
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/text_encoder/model.safetensors" "/workspace/ComfyUI/models/text_encoders"    # 246MB
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/vae/diffusion_pytorch_model.safetensors" "/workspace/ComfyUI/models/vae"     # 168MB
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors" "/workspace/ComfyUI/models/unet"                  # 23.8GB
 
 # sd 3
-download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/blob/main/text_encoders/t5xxl_fp8_e4m3fn.safetensors" "/workspace/ComfyUI/models/text_encoders"   # 4.89GB
-download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/blob/main/sd3_medium_incl_clips.safetensors" "/workspace/ComfyUI/models/checkpoints"              # 5.97GB
+download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/text_encoders/t5xxl_fp16.safetensors" "/workspace/ComfyUI/models/text_encoders"   # 4.89GB
+download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/sd3_medium_incl_clips.safetensors" "/workspace/ComfyUI/models/checkpoints"              # 5.97GB
 
-download_if_missing "https://huggingface.co/SG161222/Realistic_Vision_V6.0_B1_noVAE/blob/main/Realistic_Vision_V6.0_NV_B1_inpainting_fp16.safetensors" "/workspace/ComfyUI/models/checkpoints"  # 2.14GB
+download_if_missing "https://huggingface.co/SG161222/Realistic_Vision_V6.0_B1_noVAE/resolve/main/Realistic_Vision_V6.0_NV_B1_inpainting_fp16.safetensors" "/workspace/ComfyUI/models/checkpoints"  # 2.14GB
 
 echo "**** Checking presets and downloading corresponding files ****"
 
