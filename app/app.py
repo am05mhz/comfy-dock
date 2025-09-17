@@ -44,7 +44,7 @@ from werkzeug.utils import secure_filename
 # Configuration
 class Config:
     COMFYUI_HOST = os.getenv("COMFYUI_HOST", "127.0.0.1")
-    COMFYUI_PORT = int(os.getenv("COMFYUI_PORT", "8188"))
+    COMFYUI_PORT = int(os.getenv("COMFYUI_PORT", "3000"))
     PORT = int(os.getenv("PORT", "5000"))
     UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "uploads")
     OUTPUT_FOLDER = os.getenv("OUTPUT_FOLDER", "outputs")
@@ -1528,16 +1528,16 @@ def index():
 @app.route('/api/workflows')
 def api_workflows():
     """List all available workflows"""
-    return jsonify(workflow_manager.workflows)
-    # workflows = []
-    # for wf_id, wf_data in workflow_manager.workflows.items():
-    #     workflows.append({
-    #         'id': wf_id,
-    #         'name': wf_data['name'],
-    #         'description': wf_data.get('description', ''),
-    #         'filename': wf_data.get('filename', '')
-    #     })
-    # return jsonify(workflows)
+    # return jsonify(workflow_manager.workflows)
+    workflows = []
+    for wf_id, wf_data in workflow_manager.workflows.items():
+        workflows.append({
+            'id': wf_id,
+            'name': wf_data['name'],
+            'description': wf_data.get('description', ''),
+            'filename': wf_data.get('filename', '')
+        })
+    return jsonify(workflows)
 
 @app.route('/api/workflows/<workflow_id>')
 def api_workflow_details(workflow_id):
@@ -1560,7 +1560,7 @@ def api_workflow_details(workflow_id):
 def api_generate():
     """Generate images using a workflow"""
     try:
-        workflow_id = request.form.get('workflow_id')
+        workflow_id = request.json.get('workflow_id')
         if not workflow_id:
             return jsonify({'success': False, 'error': 'No workflow specified'}), 400
         
@@ -1569,33 +1569,33 @@ def api_generate():
             return jsonify({'success': False, 'error': 'Workflow not found'}), 404
         
         # Parse inputs
-        inputs = json.loads(request.form.get('inputs', '{}'))
+        inputs = json.loads(request.json.get('inputs', '{}'))
 
         sha256_hash = hashlib.sha256()
 
         # image urls
-        img_urls = request.form.items()
+        img_urls = request.json.items()
         for key, img_url in img_urls:
-            if key.startswith('img_url_'):
-                input_id = key[8:]  # Remove 'img_url_' prefix
+            if key.startswith('file_image_'):
+                input_id = key[11:]  # Remove 'file_image_' prefix
 
                 try:
                     print(f"Downloading {img_url}")
                     response = requests.get(img_url, stream=True)
                     response.raise_for_status()  # Raise an HTTPError for bad responses (4xx or 5xx)
 
-                    sha256_hash.update(img_url)
+                    sha256_hash.update(img_url.encode('utf-8'))
                     fname = sha256_hash.hexdigest()
                     fpath = os.path.join(config.UPLOAD_FOLDER, fname)
-                    with open(fname, 'wb') as f:
+                    with open(fpath, 'wb') as f:
                         for chunk in response.iter_content(chunk_size=8192):
                             f.write(chunk)
 
                     # Upload to ComfyUI
                     comfy_filename = comfy_client.upload_image(fpath, fname)
-                    inputs[input_id] = comfy_filename
+                    inputs[f"image_{input_id}"] = comfy_filename
                     
-                    logger.info(f"Uploaded {img_url} as {comfy_filename}")
+                    logger.info(f"Uploaded {img_url} as {comfy_filename} for input id {input_id}")
                 except requests.exceptions.HTTPError as e:
                     print(f"HTTP Error: {e}")
                 except requests.exceptions.RequestException as e:

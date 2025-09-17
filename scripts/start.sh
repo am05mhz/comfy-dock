@@ -43,38 +43,38 @@ export_env_vars() {
 
 # Start code-server
 start_code_server() {
-    echo "Starting code-server..."
-    mkdir -p /workspace/logs
-
-    # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
-    if [[ -n "${ACCESS_PASSWORD}" ]]; then
-        echo "Starting code-server with the provided password..."
-        export PASSWORD="${ACCESS_PASSWORD}"
-        nohup code-server /workspcae --bind-addr 0.0.0.0:8080 \
-            --auth password \
-            --ignore-last-opened \
-            --disable-workspace-trust \
-            &> /workspace/logs/code-server.log &
-    else
-        echo "Starting code-server without a password... (ACCESS_PASSWORD environment variable is not set.)"
-        nohup code-server /workspace --bind-addr 0.0.0.0:8080 \
-            --auth none \
-            --ignore-last-opened \
-            --disable-workspace-trust \
-            &> /workspace/logs/code-server.log &
+    if [[ "${RUN_APP}" ]]; then
+        echo "Starting code-server..."
+        mkdir -p /workspace/logs
+        # Allow a password to be set by providing the ACCESS_PASSWORD environment variable
+        if [[ -n "${ACCESS_PASSWORD}" ]]; then
+            echo "Starting code-server with the provided password..."
+            export PASSWORD="${ACCESS_PASSWORD}"
+            nohup code-server /workspcae --bind-addr 0.0.0.0:8080 \
+                --auth password \
+                --ignore-last-opened \
+                --disable-workspace-trust \
+                &> /workspace/logs/code-server.log &
+        else
+            echo "Starting code-server without a password... (ACCESS_PASSWORD environment variable is not set.)"
+            nohup code-server /workspace --bind-addr 0.0.0.0:8080 \
+                --auth none \
+                --ignore-last-opened \
+                --disable-workspace-trust \
+                &> /workspace/logs/code-server.log &
+        fi
+        echo "code-server started"
     fi
-
-    echo "code-server started"
 }
 
 start_app() {
-    echo "Starting app..."
-    if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
-        export PATH="/workspace/miniconda3/bin:$PATH"
-    fi
-    source /workspace/miniconda3/bin/activate comfy
-    cd /workspace/app
-    if [[ $RUN_APP ]]; then
+    if [[ "${RUN_APP}" ]]; then
+        echo "Starting app..."
+        if [[ ! "$PATH" == *"/workspace/miniconda3/bin"* ]]; then
+            export PATH="/workspace/miniconda3/bin:$PATH"
+        fi
+        source /workspace/miniconda3/bin/activate comfy
+        cd /workspace/app
         nohup python app.py
     fi
 }

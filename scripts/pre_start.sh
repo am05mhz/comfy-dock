@@ -19,6 +19,7 @@ setup_miniconda() {
     fi
     conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main
     conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r
+    conda init --all
     conda create -n comfy python=$ARG_PYTHON_VERSION -y
     source /workspace/miniconda3/bin/activate comfy
     pip install --no-cache-dir -U \
@@ -70,5 +71,7 @@ if [ -d "/workspace" ]; then
         cd /workspace/app
         pip install --no-cache-dir -r requirements.txt    
     fi
-    /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
+    if [[ "${DOWNLOAD_MODELS}" ]]; then
+        /setup/download_models.sh --quiet "${PRESET_DOWNLOAD}"
+    fi
 fi
