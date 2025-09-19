@@ -77,7 +77,6 @@ COPY app /setup/app
 # Start Scripts
 COPY --chmod=755 scripts/start.sh /setup/
 COPY --chmod=755 scripts/pre_start.sh /setup/
-COPY --chmod=755 scripts/post_start.sh /setup/
 
 COPY --chmod=755 scripts/download_models.sh /setup/
 
