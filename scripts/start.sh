@@ -68,9 +68,10 @@ start_code_server() {
 }
 
 start_comfyui() {
+    echo "Starting ComfyUI..."
     source /workspace/miniconda3/bin/activate comfy
     cd /workspace/ComfyUI
-    nohup python main.py --listen --port 3000 $COMFYUI_EXTRA_ARGS &> /dev/tty &
+    nohup python main.py --listen --port 3000 $COMFYUI_EXTRA_ARGS &
 }
 
 start_app() {
