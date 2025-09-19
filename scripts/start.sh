@@ -67,6 +67,12 @@ start_code_server() {
     fi
 }
 
+start_comfyui() {
+    source /workspace/miniconda3/bin/activate comfy
+    cd /workspace/ComfyUI
+    nohup python main.py --listen --port 3000 $COMFYUI_EXTRA_ARGS &> /dev/tty &
+}
+
 start_app() {
     if [[ "${RUN_APP}" ]]; then
         echo "Starting app..."
@@ -75,7 +81,7 @@ start_app() {
         fi
         source /workspace/miniconda3/bin/activate comfy
         cd /workspace/app
-        nohup python app.py
+        nohup python app.py &> /workspace/logs/app.log &
     fi
 }
 
@@ -87,14 +93,12 @@ setup_ssh
 start_nginx
 
 execute_script "/setup/pre_start.sh" "Running pre-start script..."
-
 echo "Pod Started"
 
-start_code_server
-start_app
 export_env_vars
-
-execute_script "/setup/post_start.sh" "Running post-start script..."
+start_code_server
+start_comfyui
+start_app
 
 echo "Start script(s) finished, pod is ready to use."
 
