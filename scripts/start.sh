@@ -96,7 +96,7 @@ start_nginx
 execute_script "/setup/pre_start.sh" "Running pre-start script..."
 echo "fix huggingface_hub"
 source /workspace/miniconda3/bin/activate comfy
-pip uninstall huggingface_hub
+pip uninstall -y huggingface_hub
 pip install huggingface_hub<1.0
 echo "Pod Started"
 
