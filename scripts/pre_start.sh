@@ -24,7 +24,7 @@ setup_miniconda() {
     source /workspace/miniconda3/bin/activate comfy
     pip install --no-cache-dir -U \
         pip setuptools wheel \
-        huggingface_hub hf_transfer \
+        huggingface_hub<1.0 hf_transfer \
         numpy scipy matplotlib pandas scikit-learn seaborn requests tqdm pillow pyyaml \
         triton \
         torch==$ARG_TORCH_VERSION torchvision torchaudio --extra-index-url "https://download.pytorch.org/whl/$ARG_CUDA_VERSION"

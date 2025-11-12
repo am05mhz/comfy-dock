@@ -490,10 +490,10 @@ class WorkflowManager:
                     'title': title,
                     'required': True
                 }
-                
+
             # Text prompt nodes
-            elif class_type == 'CLIPTextEncode':
-                current_text = node_inputs.get('text', '')
+            elif class_type == 'TextEncodeQwenImageEdit' or class_type == 'CLIPTextEncode':
+                current_text = node_inputs.get('text', '') if class_type == 'CLIPTextEncode' else node_inputs.get('prompt', '')
                 # Determine prompt type by content or title
                 is_negative = any(word in title.lower() for word in ['negative', 'neg']) or \
                              any(word in current_text.lower() for word in ['bad', 'worst', 'low quality'])
