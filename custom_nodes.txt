@@ -20,3 +20,10 @@ https://github.com/chflame163/ComfyUI_LayerStyle_Advance.git
 https://github.com/1038lab/ComfyUI-RMBG.git
 https://github.com/Fannovel16/comfyui_controlnet_aux.git
 https://github.com/cubiq/ComfyUI_IPAdapter_plus.git
+https://github.com/yolain/ComfyUI-Easy-Use.git
+https://github.com/kijai/ComfyUI-IC-Light.git
+https://github.com/huchenlei/ComfyUI-IC-Light-Native.git
+https://github.com/rgthree/rgthree-comfy.git
+https://github.com/MixLabPro/comfyui-mixlab-nodes.git
+https://github.com/Layer-norm/comfyui-lama-remover.git
+https://github.com/PozzettiAndrea/ComfyUI-SAM3.git
