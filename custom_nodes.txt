@@ -30,3 +30,4 @@ https://github.com/PozzettiAndrea/ComfyUI-SAM3.git
 https://github.com/sipherxyz/comfyui-art-venture.git
 https://github.com/TinyTerra/ComfyUI_tinyterraNodes.git
 https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git
+https://github.com/lrzjason/Comfyui-QwenEditUtils.git
