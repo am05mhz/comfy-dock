@@ -7,10 +7,10 @@ set -e  # Exit the script if any statement returns a non-true return value
 
 # Setup ssh
 setup_ssh() {
-    if [[ $PUBLIC_KEY ]]; then
+    if [[ $SSH_KEY ]]; then
         echo "Setting up SSH..."
         mkdir -p ~/.ssh
-        echo "$PUBLIC_KEY" >> ~/.ssh/authorized_keys
+        echo "$SSH_KEY" >> ~/.ssh/authorized_keys
         chmod 700 -R ~/.ssh
 
         ssh-keygen -A       # regenerate new keys

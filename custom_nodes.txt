@@ -31,3 +31,8 @@ https://github.com/sipherxyz/comfyui-art-venture.git
 https://github.com/TinyTerra/ComfyUI_tinyterraNodes.git
 https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git
 https://github.com/lrzjason/Comfyui-QwenEditUtils.git
+https://github.com/WASasquatch/was-node-suite-comfyui.git
+https://github.com/jamesWalker55/comfyui-various.git
+https://github.com/1038lab/ComfyUI-QwenVL.git
+https://github.com/benjiyaya/ComfyUI-QwenImageLayeredToLength.git
+https://github.com/calcuis/gguf.git
