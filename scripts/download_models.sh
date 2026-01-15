@@ -16,9 +16,11 @@ fi
 download_if_missing() {
     local url="$1"
     local dest_dir="$2"
+    local filename="$3"
 
-    local filename
-    filename=$(basename "$url")
+    if [ -z "$filename" ]; then
+        filename=$(basename "$url")
+    fi
     local filepath="$dest_dir/$filename"
 
     mkdir -p "$dest_dir"
@@ -46,134 +48,75 @@ download_if_missing() {
 
 IFS=',' read -ra PRESETS <<< "$1"
 
-echo "**** Downloading default files ****"
+echo "**** Downloading default models ****"
 # upscale model
 download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models" # 66.9MB
 download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"       # 31.1MB
 
-# flux
-download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/text_encoder/model.safetensors" "/workspace/ComfyUI/models/text_encoders"    # 246MB
-download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/vae/diffusion_pytorch_model.safetensors" "/workspace/ComfyUI/models/vae"     # 168MB
-download_if_missing "https://huggingface.co/black-forest-labs/FLUX.1-schnell/resolve/main/flux1-schnell.safetensors" "/workspace/ComfyUI/models/unet"                  # 23.8GB
 
-# sd 3
-download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/text_encoders/t5xxl_fp16.safetensors" "/workspace/ComfyUI/models/text_encoders"   # 4.89GB
-download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-3-medium/resolve/main/sd3_medium_incl_clips.safetensors" "/workspace/ComfyUI/models/checkpoints"              # 5.97GB
+download_if_missing "https://huggingface.co/gitgato/EpicReal/resolve/fd2b9d09eb5dbd5fb5a0aedfb9c24c3e0196c214/epicrealism_naturalSinRC1VAE.safetensors" "/workspace/ComfyUI/models/checkpoints"
+download_if_missing "https://huggingface.co/xxiaogui/hongchao/resolve/main/juggernautXL_ragnarokBy.safetensors" "/workspace/ComfyUI/models/checkpoints"
+download_if_missing "https://huggingface.co/AiWise/Juggernaut-XL-V9-GE-RDPhoto2-Lightning_4S/resolve/main/juggernautXL_v9Rdphoto2Lightning.safetensors" "/workspace/ComfyUI/models/checkpoints"
+download_if_missing "https://huggingface.co/khaimd123/realisticVisionV60B1_v51VAE/resolve/5314c8485d833085571162c6bd3664eabdc6b25f/realisticVisionV60B1_v51VAE.safetensors" "/workspace/ComfyUI/models/checkpoints"
 
-download_if_missing "https://huggingface.co/SG161222/Realistic_Vision_V6.0_B1_noVAE/resolve/main/Realistic_Vision_V6.0_NV_B1_inpainting_fp16.safetensors" "/workspace/ComfyUI/models/checkpoints"  # 2.14GB
+download_if_missing "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "/workspace/ComfyUI/models/clip"
 
-echo "**** Checking presets and downloading corresponding files ****"
+download_if_missing "https://huggingface.co/fofr/comfyui/resolve/a25ad5613692b9593ea6d126b0451191cf420765/clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors" "/workspace/ComfyUI/models/clip_vision"
+download_if_missing "https://huggingface.co/fofr/comfyui/resolve/a25ad5613692b9593ea6d126b0451191cf420765/clip_vision/CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors" "/workspace/ComfyUI/models/clip_vision"
+download_if_missing "https://huggingface.co/fofr/comfyui/resolve/a25ad5613692b9593ea6d126b0451191cf420765/clip_vision/clip-vit-large-patch14.bin" "/workspace/ComfyUI/models/clip_vision"
 
-for preset in "${PRESETS[@]}"; do
-    case "${preset}" in
-        WAINSFW_V140)
-            echo "Preset: WAINSFW_V140"
-            download_if_missing "https://huggingface.co/Ine007/waiNSFWIllustrious_v140/resolve/main/waiNSFWIllustrious_v140.safetensors" "/workspace/ComfyUI/models/checkpoints"
-            ;;
-        NTRMIX_V40)
-            echo "Preset: NTRMIX_V40"
-            download_if_missing "https://huggingface.co/personal1802/NTRMIXillustrious-XLNoob-XL4.0/resolve/main/ntrMIXIllustriousXL_v40.safetensors" "/workspace/ComfyUI/models/checkpoints"
-            ;;
-        WAN22_TI2V_5B)
-            echo "Preset: WAN22_TI2V_5B"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan2.2_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_ti2v_5B_fp16.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_T2V_A14B)
-            echo "Preset: WAN22_T2V_A14B"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_high_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_t2v_low_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_FP8_SCALED)
-            echo "Preset: WAN22_I2V_A14B_FP8_SCALED"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_FP8_E4M3FN_SCALED_KJ)
-            echo "Preset: WAN22_I2V_A14B_FP8_E4M3FN_SCALED_KJ"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/I2V/Wan2_2-I2V-A14B-HIGH_fp8_e4m3fn_scaled_KJ.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/I2V/Wan2_2-I2V-A14B-LOW_fp8_e4m3fn_scaled_KJ.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_FP8_E5M2_SCALED_KJ)
-            echo "Preset: WAN22_I2V_A14B_FP8_E5M2_SCALED_KJ"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/I2V/Wan2_2-I2V-A14B-HIGH_fp8_e5m2_scaled_KJ.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy_fp8_scaled/resolve/main/I2V/Wan2_2-I2V-A14B-LOW_fp8_e5m2_scaled_KJ.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_GGUF_Q8_0)
-            echo "Preset: WAN22_I2V_A14B_GGUF_Q8_0"
-            download_if_missing "https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q8_0.gguf" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_high_noise_14B_Q8_0.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_low_noise_14B_Q8_0.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_GGUF_Q6_K)
-            echo "Preset: WAN22_I2V_A14B_GGUF_Q6_K"
-            download_if_missing "https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q6_K.gguf" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_high_noise_14B_Q6_K.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_low_noise_14B_Q6_K.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_GGUF_Q5_K_S)
-            echo "Preset: WAN22_I2V_A14B_GGUF_Q5_K_S"
-            download_if_missing "https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q5_K_S.gguf" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_high_noise_14B_Q5_K_S.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_low_noise_14B_Q5_K_S.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_GGUF_Q5_K_M)
-            echo "Preset: WAN22_I2V_A14B_GGUF_Q5_K_M"
-            download_if_missing "https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q5_K_M.gguf" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_high_noise_14B_Q5_K_M.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_low_noise_14B_Q5_K_M.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_GGUF_Q4_K_S)
-            echo "Preset: WAN22_I2V_A14B_GGUF_Q4_K_S"
-            download_if_missing "https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q4_K_S.gguf" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_high_noise_14B_Q4_K_S.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_low_noise_14B_Q4_K_S.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_I2V_A14B_GGUF_Q4_K_M)
-            echo "Preset: WAN22_I2V_A14B_GGUF_Q4_K_M"
-            download_if_missing "https://huggingface.co/city96/umt5-xxl-encoder-gguf/resolve/main/umt5-xxl-encoder-Q4_K_M.gguf" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_high_noise_14B_Q4_K_M.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            download_if_missing "https://huggingface.co/bullerwins/Wan2.2-I2V-A14B-GGUF/resolve/main/wan2.2_i2v_low_noise_14B_Q4_K_M.gguf" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        WAN22_LIGHTNING_LORA)
-            echo "Preset: WAN22_LIGHTNING_LORA"
-            download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Lightning/Wan2.2-Lightning_I2V-A14B-4steps-lora_HIGH_fp16.safetensors" "/workspace/ComfyUI/models/loras"
-            download_if_missing "https://huggingface.co/Kijai/WanVideo_comfy/resolve/main/Wan22-Lightning/Wan2.2-Lightning_I2V-A14B-4steps-lora_LOW_fp16.safetensors" "/workspace/ComfyUI/models/loras"
-            ;;
-        WAN22_NSFW_LORA)
-            echo "Preset: WAN22_NSFW_LORA"
-            download_if_missing "https://huggingface.co/sombi/comfyui_models/resolve/main/Wan2.2_nsfw_lora_v0.08a/NSFW-22-H-e8.safetensors" "/workspace/ComfyUI/models/loras"
-            download_if_missing "https://huggingface.co/sombi/comfyui_models/resolve/main/Wan2.2_nsfw_lora_v0.08a/NSFW-22-L-e8.safetensors" "/workspace/ComfyUI/models/loras"
-            ;;
-        # UPSCALE_MODELS)
-        #     echo "Preset: UPSCALE_MODELS"
-        #     download_if_missing "https://huggingface.co/Comfy-Org/Real-ESRGAN_repackaged/resolve/main/RealESRGAN_x4plus.safetensors" "/workspace/ComfyUI/models/upscale_models"
-        #     download_if_missing "https://huggingface.co/Kim2091/2x-AnimeSharpV4/resolve/main/2x-AnimeSharpV4_RCAN.safetensors" "/workspace/ComfyUI/models/upscale_models"
-        #     ;;
-        WAN22_S2V_FP8_SCALED)
-            echo "Preset: WAN22_S2V_FP8_SCALED"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/text_encoders/umt5_xxl_fp8_e4m3fn_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/audio_encoders/wav2vec2_large_english_fp16.safetensors" "/workspace/ComfyUI/models/audio_encoders"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors" "/workspace/ComfyUI/models/vae"
-            download_if_missing "https://huggingface.co/Comfy-Org/Wan_2.2_ComfyUI_Repackaged/resolve/main/split_files/diffusion_models/wan2.2_s2v_14B_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
-            ;;
-        *)
-            echo "No matching preset for '${preset}', skipping."
-            ;;
-    esac
-done
+download_if_missing "https://huggingface.co/ckpt/controlnet-sdxl-1.0/resolve/main/control-lora-depth-rank256.safetensors" "/workspace/ComfyUI/models/controlnet"
+
+download_if_missing "https://huggingface.co/Comfy-Org/flux1-kontext-dev_ComfyUI/resolve/main/split_files/diffusion_models/flux1-dev-kontext_fp8_scaled.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+download_if_missing "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/diffusion_models/flux2_dev_fp8mixed.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_fp8_e4m3fn.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_layered_fp8mixed.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+download_if_missing "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15_light_v11.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter-plus_sd15.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter-plus-face_sd15.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter-full-face_sd15.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15_vit-G.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter_sdxl_vit-h.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus_sdxl_vit-h.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter-plus-face_sdxl_vit-h.safetensors" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/sdxl_models/ip-adapter_sdxl.safetensors" "/workspace/ComfyUI/models/ipadapter"
+
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sd15.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sd15.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-portrait-v11_sd15.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-portrait_sdxl.bin" "/workspace/ComfyUI/models/ipadapter"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-portrait_sdxl_unnorm.bin" "/workspace/ComfyUI/models/ipadapter"
+
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sd15_lora.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sd15_lora.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid_sdxl_lora.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/h94/IP-Adapter-FaceID/resolve/main/ip-adapter-faceid-plusv2_sdxl_lora.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-4steps-V1.0.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V1.0.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V1.1.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/FoxBaze/Try_On_Qwen_Edit_Lora_Alpha/resolve/main/Try_On_Qwen_Edit_Lora.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V2.0.safetensors" "/workspace/ComfyUI/models/loras/qwen-image"
+download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-fp32.safetensors" "/workspace/ComfyUI/models/loras/qwen-edit/2511/"
+download_if_missing "https://toot.bot.nu/joy/ckpt/blending.safetensors" "/workspace/ComfyUI/models/loras/qwen-edit"
+download_if_missing "https://toot.bot.nu/joy/ckpt/wh1t3bg.safetensors" "/workspace/ComfyUI/models/loras/training"
+
+download_if_missing "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/text_encoders/mistral_3_small_flux2_fp8.safetensors" "/workspace/ComfyUI/models/text_encoders"
+download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
+
+download_if_missing "https://huggingface.co/lllyasviel/ic-light/resolve/main/iclight_sd15_fc.safetensors" "/workspace/ComfyUI/models/unet"
+download_if_missing "https://huggingface.co/theunlikely/Qwen-Image-Edit-2509/resolve/main/qwen_image_edit_2509_fp8_e4m3fn.safetensors" "/workspace/ComfyUI/models/unet"
+
+download_if_missing "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors" "/workspace/ComfyUI/models/vae"
+download_if_missing "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors" "/workspace/ComfyUI/models/vae"
+download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/split_files/vae/qwen_image_layered_vae.safetensors" "/workspace/ComfyUI/models/vae"
+download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "/workspace/ComfyUI/models/vae"
+download_if_missing "https://toot.bot.nu/joy/ckpt/ultrafluxv1.safetensors" "/workspace/ComfyUI/models/vae"
+
+echo "done"

@@ -39,6 +39,7 @@ setup_comfy() {
     git clone https://github.com/comfyanonymous/ComfyUI.git
     cd ComfyUI
     pip install --no-cache-dir -r requirements.txt
+    pip install hf_transfer
     git clone https://github.com/ltdrdata/ComfyUI-Manager.git custom_nodes/ComfyUI-Manager
     cd custom_nodes/ComfyUI-Manager
     pip install --no-cache-dir -r requirements.txt
