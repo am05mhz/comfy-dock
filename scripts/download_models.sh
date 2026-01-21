@@ -102,6 +102,8 @@ download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolv
 download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V1.1.safetensors" "/workspace/ComfyUI/models/loras"
 download_if_missing "https://huggingface.co/FoxBaze/Try_On_Qwen_Edit_Lora_Alpha/resolve/main/Try_On_Qwen_Edit_Lora.safetensors" "/workspace/ComfyUI/models/loras"
 download_if_missing "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0/resolve/main/sd_xl_base_1.0.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/fal/Qwen-Image-Edit-2511-Multiple-Angles-LoRA/resolve/main/qwen-image-edit-2511-multiple-angles-lora.safetensors" "/workspace/ComfyUI/models/loras"
+download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-bf16.safetensors " "/workspace/ComfyUI/models/loras"
 download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolve/main/Qwen-Image-Lightning-8steps-V2.0.safetensors" "/workspace/ComfyUI/models/loras/qwen-image"
 download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-fp32.safetensors" "/workspace/ComfyUI/models/loras/qwen-edit/2511/"
 download_if_missing "https://toot.bot.nu/joy/ckpt/blending.safetensors" "/workspace/ComfyUI/models/loras/qwen-edit"
