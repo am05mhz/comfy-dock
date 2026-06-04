@@ -60,6 +60,8 @@ download_if_missing "https://huggingface.co/AiWise/Juggernaut-XL-V9-GE-RDPhoto2-
 download_if_missing "https://huggingface.co/khaimd123/realisticVisionV60B1_v51VAE/resolve/5314c8485d833085571162c6bd3664eabdc6b25f/realisticVisionV60B1_v51VAE.safetensors" "/workspace/ComfyUI/models/checkpoints"
 
 download_if_missing "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/text_encoders/qwen_3_4b.safetensors" "/workspace/ComfyUI/models/clip"
+download_if_missing "https://huggingface.co/Phil2Sat/Qwen-Image-Edit-Rapid-AIO-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-abliterated/Qwen2.5-VL-7B-Instruct-abliterated.Q8_0.gguf" "/workspace/ComfyUI/models/clip"
+download_if_missing "https://huggingface.co/Phil2Sat/Qwen-Image-Edit-Rapid-AIO-GGUF/resolve/main/Qwen2.5-VL-7B-Instruct-abliterated/Qwen2.5-VL-7B-Instruct-abliterated.mmproj-Q8_0.gguf" "/workspace/ComfyUI/models/clip"
 
 download_if_missing "https://huggingface.co/fofr/comfyui/resolve/a25ad5613692b9593ea6d126b0451191cf420765/clip_vision/CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors" "/workspace/ComfyUI/models/clip_vision"
 download_if_missing "https://huggingface.co/fofr/comfyui/resolve/a25ad5613692b9593ea6d126b0451191cf420765/clip_vision/CLIP-ViT-bigG-14-laion2B-39B-b160k.safetensors" "/workspace/ComfyUI/models/clip_vision"
@@ -73,6 +75,7 @@ download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/re
 download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_layered_fp8mixed.safetensors" "/workspace/ComfyUI/models/diffusion_models"
 download_if_missing "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/diffusion_models/z_image_turbo_bf16.safetensors" "/workspace/ComfyUI/models/diffusion_models"
 download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Edit_ComfyUI/resolve/main/split_files/diffusion_models/qwen_image_edit_2511_fp8mixed.safetensors" "/workspace/ComfyUI/models/diffusion_models"
+download_if_missing "https://huggingface.co/black-forest-labs/FLUX.2-klein-4b-fp8/resolve/main/flux-2-klein-4b-fp8.safetensors" "/workspace/ComfyUI/models/diffusion_models"
 
 download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15.safetensors" "/workspace/ComfyUI/models/ipadapter"
 download_if_missing "https://huggingface.co/h94/IP-Adapter/resolve/main/models/ip-adapter_sd15_light_v11.bin" "/workspace/ComfyUI/models/ipadapter"
@@ -108,17 +111,21 @@ download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Lightning/resolv
 download_if_missing "https://huggingface.co/lightx2v/Qwen-Image-Edit-2511-Lightning/resolve/main/Qwen-Image-Edit-2511-Lightning-4steps-V1.0-fp32.safetensors" "/workspace/ComfyUI/models/loras/qwen-edit/2511/"
 download_if_missing "https://toot.bot.nu/joy/ckpt/blending.safetensors" "/workspace/ComfyUI/models/loras/qwen-edit"
 download_if_missing "https://toot.bot.nu/joy/ckpt/wh1t3bg.safetensors" "/workspace/ComfyUI/models/loras/training"
+download_if_missing "https://toot.bot.nu/joy/train/white-bg-lora-flux.2-klein-4b/epoch-4.safetensors" "/workspace/ComfyUI/models/loras/klein/whitebg"
+download_if_missing "https://toot.bot.nu/joy/train/white-bg-2-lora-flux.2-klein-4b/epoch-5.safetensors" "/workspace/ComfyUI/models/loras/klein/whitebgv2"
 
 download_if_missing "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/text_encoders/mistral_3_small_flux2_fp8.safetensors" "/workspace/ComfyUI/models/text_encoders"
 download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/text_encoders/qwen_2.5_vl_7b_fp8_scaled.safetensors" "/workspace/ComfyUI/models/text_encoders"
 
 download_if_missing "https://huggingface.co/lllyasviel/ic-light/resolve/main/iclight_sd15_fc.safetensors" "/workspace/ComfyUI/models/unet"
 download_if_missing "https://huggingface.co/theunlikely/Qwen-Image-Edit-2509/resolve/main/qwen_image_edit_2509_fp8_e4m3fn.safetensors" "/workspace/ComfyUI/models/unet"
+download_if_missing "https://huggingface.co/Phil2Sat/Qwen-Image-Edit-Rapid-AIO-GGUF/resolve/main/v90/qwen-rapid-nsfw-v9.0-Q4_K_S.gguf" "/workspace/ComfyUI/models/unet"
 
 download_if_missing "https://huggingface.co/Comfy-Org/z_image_turbo/resolve/main/split_files/vae/ae.safetensors" "/workspace/ComfyUI/models/vae"
 download_if_missing "https://huggingface.co/Comfy-Org/flux2-dev/resolve/main/split_files/vae/flux2-vae.safetensors" "/workspace/ComfyUI/models/vae"
 download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image-Layered_ComfyUI/resolve/main/split_files/vae/qwen_image_layered_vae.safetensors" "/workspace/ComfyUI/models/vae"
 download_if_missing "https://huggingface.co/Comfy-Org/Qwen-Image_ComfyUI/resolve/main/split_files/vae/qwen_image_vae.safetensors" "/workspace/ComfyUI/models/vae"
+download_if_missing "https://huggingface.co/calcuis/qwen-image-edit-plus-gguf/resolve/8c872fd6a8bc2a339f149f0323085c74b825dbe4/pig_qwen_image_vae_fp32-f16.gguf" "/workspace/ComfyUI/models/vae"
 download_if_missing "https://toot.bot.nu/joy/ckpt/ultrafluxv1.safetensors" "/workspace/ComfyUI/models/vae"
 
 echo "done"

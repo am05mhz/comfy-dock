@@ -26,7 +26,6 @@ https://github.com/huchenlei/ComfyUI-IC-Light-Native.git
 https://github.com/rgthree/rgthree-comfy.git
 https://github.com/MixLabPro/comfyui-mixlab-nodes.git
 https://github.com/Layer-norm/comfyui-lama-remover.git
-https://github.com/PozzettiAndrea/ComfyUI-SAM3.git
 https://github.com/sipherxyz/comfyui-art-venture.git
 https://github.com/TinyTerra/ComfyUI_tinyterraNodes.git
 https://github.com/Suzie1/ComfyUI_Comfyroll_CustomNodes.git
@@ -36,3 +35,7 @@ https://github.com/jamesWalker55/comfyui-various.git
 https://github.com/1038lab/ComfyUI-QwenVL.git
 https://github.com/benjiyaya/ComfyUI-QwenImageLayeredToLength.git
 https://github.com/calcuis/gguf.git
+https://github.com/numz/ComfyUI-SeedVR2_VideoUpscaler.git
+https://github.com/crystian/ComfyUI-Crystools.git
+https://github.com/lquesada/ComfyUI-Inpaint-CropAndStitch.git
+https://github.com/HavocsCall/ComfyUI_HavocsCall_Custom_Nodes.git
